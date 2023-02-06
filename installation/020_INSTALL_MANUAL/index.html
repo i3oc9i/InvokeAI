@@ -802,20 +802,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pip-install" class="md-nav__link">
-    pip Install
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#creating-an-install-version-of-invokeai" class="md-nav__link">
-    Creating an "install" version of InvokeAI
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -886,50 +872,22 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../INSTALL_AUTOMATED/" class="md-nav__link">
-        Installing with the Automated Installer
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../INSTALL_MANUAL/" class="md-nav__link">
-        Manual Installation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_10" type="checkbox" id="__nav_5_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_8" type="checkbox" id="__nav_5_8" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_5_10">
+        <label class="md-nav__link" for="__nav_5_8">
           Developers documentation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Developers documentation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_5_10">
+        <label class="md-nav__title" for="__nav_5_8">
           <span class="md-nav__icon md-icon"></span>
           Developers documentation
         </label>
@@ -965,18 +923,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_11" type="checkbox" id="__nav_5_11" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_9" type="checkbox" id="__nav_5_9" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_5_11">
+        <label class="md-nav__link" for="__nav_5_9">
           Deprecated documentation
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Deprecated documentation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_5_11">
+        <label class="md-nav__title" for="__nav_5_9">
           <span class="md-nav__icon md-icon"></span>
           Deprecated documentation
         </label>
@@ -1183,18 +1141,13 @@
 <p><strong>python experience is mandatory</strong></p>
 </div>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
-<p>You have two choices for manual installation. The <a href="#pip-Install">first one</a> uses
-basic Python virtual environment (<code>venv</code>) command and <code>pip</code> package manager. The
-<a href="#Conda-method">second one</a> uses Anaconda3 package manager (<code>conda</code>). Both
-methods require you to enter commands on the terminal, also known as the
-"console".</p>
-<p>Note that the <code>conda</code> installation method is currently deprecated and will not
-be supported at some point in the future.</p>
+<p>!!! tip As of InvokeAI v2.3.0 installation using the <code>conda</code> package manager
+is no longer being supported. It will likely still work, but we are not testing
+this installation method.</p>
 <p>On Windows systems, you are encouraged to install and use the
 <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3">PowerShell</a>,
 which provides compatibility with Linux and Mac shells and nice features such as
 command-line completion.</p>
-<h2 id="pip-install">pip Install<a class="headerlink" href="#pip-install" title="Permanent link">#</a></h2>
 <p>To install InvokeAI with virtual environments and the PIP package manager,
 please follow these steps:</p>
 <ol>
@@ -1213,37 +1166,54 @@ please follow these steps:</p>
 steps.</p>
 </li>
 <li>
-<p>From within the InvokeAI top-level directory, create and activate a virtual
-    environment named <code>.venv</code> and prompt displaying <code>InvokeAI</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>--prompt<span class="w"> </span>InvokeAI<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--upgrade-deps
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<p>Create a directory of to contain your InvokeAI installation (known as the "runtime"
+    or "root" directory). This is where your models, configs, and outputs will live
+    by default. Please keep in mind the disk space requirements - you will need at
+    least 18GB (as of this writing) for the models and the virtual environment.
+    From now on we will refer to this directory as <code>INVOKEAI_ROOT</code>. This keeps the
+    runtime directory separate from the source code and aids in updating.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">INVOKEAI_ROOT</span><span class="o">=</span><span class="s2">&quot;~/invokeai&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>mkdir<span class="w"> </span><span class="si">${</span><span class="nv">INVOKEAI_ROOT</span><span class="si">}</span>
 </code></pre></div>
 </li>
 <li>
+<p>From within the InvokeAI top-level directory, create and activate a virtual
+    environment named <code>.venv</code> and prompt displaying <code>InvokeAI</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span><span class="si">${</span><span class="nv">INVOKEAI_ROOT</span><span class="si">}</span>/.venv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--prompt<span class="w"> </span>invokeai<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--upgrade-deps<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--copies
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">INVOKEAI_ROOT</span><span class="si">}</span>/.venv/bin/activate
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You <strong>may</strong> create your virtual environment anywhere on the filesystem.
+But IF you choose a location that is <em>not</em> inside the <code>$INVOKEAI_ROOT</code> directory,
+then you must set the <code>INVOKEAI_ROOT</code> environment variable in your shell environment,
+for example, by editing <code>~/.bashrc</code> or <code>~/.zshrc</code> files, or setting the Windows environment
+variable. Refer to your operating system / shell documentation for the correct way of doing so.</p>
+</div>
+</li>
+<li>
 <p>Make sure that pip is installed in your virtual environment an up to date:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ensurepip<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>--upgrade
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>--upgrade<span class="w"> </span>pip
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
 </code></pre></div>
 </li>
 <li>
 <p>Install Package</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--use-pep517<span class="w"> </span>.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--use-pep517<span class="w"> </span>.
+</code></pre></div>
+<p>Deactivate and reactivate your runtime directory so that the invokeai-specific commands
+become available in the environment</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>deactivate &amp;&amp; source ${INVOKEAI_ROOT}/.venv/bin/activate
 </code></pre></div>
 </li>
 <li>
 <p>Set up the runtime directory</p>
-<p>In this step you will initialize a runtime directory that will contain the
+<p>In this step you will initialize your runtime directory with the downloaded
 models, model config files, directory for textual inversion embeddings, and
-your outputs. This keeps the runtime directory separate from the source code
-and aids in updating.</p>
-<p>You may pick any location for this directory using the <code>--root_dir</code> option
-(abbreviated --root). If you don't pass this option, it will default to
-<code>~/invokeai</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>invokeai-configure<span class="w"> </span>--root_dir<span class="w"> </span>~/Programs/invokeai
+your outputs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>invokeai-configure<span class="w"> </span>--root<span class="w"> </span><span class="si">${</span><span class="nv">INVOKEAI_ROOT</span><span class="si">}</span>
 </code></pre></div>
 <p>The script <code>invokeai-configure</code> will interactively guide you through the
 process of downloading and installing the weights files needed for InvokeAI.
@@ -1254,10 +1224,6 @@ accept the agreement, and provide an access token that allows InvokeAI to
 legally download and install the weights files.</p>
 <p>If you get an error message about a module not being installed, check that
 the <code>invokeai</code> environment is active and if not, repeat step 5.</p>
-<p>Note that <code>invokeai-configure</code> and <code>invokeai</code> should be installed under your
-virtual environment directory and the system should find them on the PATH.
-If this isn't working on your system, you can call the scripts directory
-using <code>python scripts/configure_invokeai.py</code> and <code>python scripts/invoke.py</code>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you have already downloaded the weights file(s) for another Stable
@@ -1279,15 +1245,15 @@ runtime directory, please specify the path with the <code>--root_dir</code> opti
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">CLI</label><label for="__tabbed_1_2">local Webserver</label><label for="__tabbed_1_3">Public Webserver</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>invoke.py<span class="w"> </span>--root<span class="w"> </span>~/Programs/invokeai
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>invokeai<span class="w"> </span>--root<span class="w"> </span>~/invokeai
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>invoke.py<span class="w"> </span>--web<span class="w"> </span>--root<span class="w"> </span>~/Programs/invokeai
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>invokeai<span class="w"> </span>--web<span class="w"> </span>--root<span class="w"> </span>~/invokeai
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>invoke.py<span class="w"> </span>--web<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--root<span class="w"> </span>~/Programs/invokeai
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>invokeai<span class="w"> </span>--web<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--root<span class="w"> </span>~/invokeai
 </code></pre></div>
 </div>
 </div>
@@ -1297,7 +1263,8 @@ runtime directory, please specify the path with the <code>--root_dir</code> opti
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>You can permanently set the location of the runtime directory by setting the environment variable INVOKEAI_ROOT to the path of the directory.</p>
+<p>You can permanently set the location of the runtime directory by setting the environment variable <code>INVOKEAI_ROOT</code> to the path of the directory. As mentioned previously, this is
+<strong>required</strong> if your virtual environment is located outside of your runtime directory.</p>
 </div>
 </li>
 <li>
@@ -1313,49 +1280,19 @@ rendering will be fast.</p>
 <p>Subsequently, to relaunch the script, activate the virtual environment, and
     then launch <code>invokeai</code> command. If you forget to activate the virtual
     environment you will most likeley receive a <code>command not found</code> error.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Do not move the source code repository after installation. The virtual environment directory has absolute paths in it that get confused if the directory is moved.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not move the runtime directory after installation. The virtual environment has absolute paths in it that get confused if the directory is moved.</p>
 </div>
 </li>
 </ol>
-<h2 id="creating-an-install-version-of-invokeai">Creating an "install" version of InvokeAI<a class="headerlink" href="#creating-an-install-version-of-invokeai" title="Permanent link">#</a></h2>
-<p>If you wish you can install InvokeAI and all its dependencies in the runtime
-directory. This allows you to delete the source code repository and eliminates
-the need to provide <code>--root_dir</code> at startup time. Note that this method only
-works with the PIP method.</p>
-<ol>
-<li>
-<p>Follow the instructions for the PIP install, but in step <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/invoke-ai/InvokeAI/issues/2" title="GitHub Issue: invoke-ai/InvokeAI #2">#2</a> put the virtual
-   environment into the runtime directory. For example, assuming the runtime
-   directory lives in <code>~/Programs/invokeai</code>, you'd run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>~/Programs/invokeai
-</code></pre></div>
-</li>
-<li>
-<p>Now follow steps 3 to 5 in the PIP recipe, ending with the <code>pip install</code>
-   step.</p>
-</li>
-<li>
-<p>Run one additional step while you are in the source code repository directory</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>pip install --use-pep517 . # note the dot in the end!!!
-</code></pre></div>
-</li>
-<li>
-<p>That's all! Now, whenever you activate the virtual environment, <code>invokeai</code>
-   will know where to look for the runtime directory without needing a
-   <code>--root_dir</code> argument. In addition, you can now move or delete the source
-   code repository entirely.</p>
-</li>
-</ol>
-<p>(Don't move the runtime directory!)</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 2, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 3, 2023</span>
       
         <br>
         Created:
